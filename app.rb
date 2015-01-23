@@ -6,8 +6,12 @@ require 'json'
 require 'yaml'
 
 include NCMB
-yaml = YAML.load_file(File.join(File.dirname(__FILE__), '.', 'setting.yml'))
-NCMB.initialize application_key: yaml['application_key'],  client_key: yaml['client_key']
+if File.exist?('./setting.yml')
+    yaml = YAML.load_file(File.join(File.dirname(__FILE__), '.', 'setting.yml'))
+    NCMB.initialize application_key: yaml['application_key'],  client_key: yaml['client_key']
+else 
+    NCMB.initialize application_key: "",  client_key: ""
+end
 
 # object get
 get '/classes/:class_name/:object_id' do
