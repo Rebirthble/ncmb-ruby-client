@@ -133,7 +133,7 @@ module NCMB
       application_key: ENV["NCMB_APPLICATION_KEY"],
       client_key:      ENV["NCMB_CLIENT_KEY"]
     }
-    defaulted.merge!(params)
+    #defaulted.merge!(params)
     @@client = Client.new(defaulted)
   end
 end
