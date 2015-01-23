@@ -1,34 +1,61 @@
-ncmb-ruby-client
+ncmb-ruby-gateway
 ================
 
-A simple Ruby client for the nifty cloud mobile backend REST API
+A simple Ruby gateway for the nifty cloud mobile backend REST API
+
+必要なもの
+-------
+
+- Ruby v2.1.x~
+- Sinatra
+
+インストール手順
+------------
+
+```
+$gem install sinatra
+```
+
+```
+$git clone https://github.com/Rebirthble/ncmb_ruby_gateway.git
+```
 
 Basic Usage
 -----------
 
-```
-NCMB.initialize application_key: application_key,  client_key: client_key
-
-@todo = NCMB::DataStore.new 'Todo'
-@todo = @todo.limit(20).count(1).skip(0)
-puts "@todo[0].name #{@todo[0].name}"
-```
-
-### Register push notification
+setting.ymlを開いて、mobile backendのAPIキーを登録してください。
 
 ```
-NCMB.initialize application_key: application_key,  client_key: client_key
-
-@push = NCMB::Push.new
-@push.immediateDeliveryFlag = true
-@push.target = ['ios']
-@push.message = "This is test message"
-@push.deliveryExpirationTime = "3 day"
-if @push.save
-  puts "Push save successful."
-else
-  puts "Push save faild."
-end
+application_key: YOUR_APP_KEY 
+client_key: YOUR_CLI_KEY
 ```
+
+gateway.rbを実行します。
+
+```
+$ruby gateway.rb
+```
+
+この状態で、サーバーに対してAPIリクエストを実行してみてください。
+以下のcurlコマンドのサンプルのように、APIキーでの認証をgatewayが担ってくれます。
+
+```
+//Object registration API
+curl -X POST -d '{"title":"fugafuga"}'  http://localhost:4567/classes/aaaa
+
+//Object search API
+curl 'http://localhost:4567/classes/aaaa?where=%7b%22title%22%3a%22test%22%7d&limit=10'
+
+```
+
+REST APIのリクエスト方法は、ほぼ以下のREST APIリファレンスに準拠しています。
+JSONデータを送信して、JSONデータを受け取ってください。
+ただし、データ検索を行う場合のみ、上記のサンプルを参考にクエリストリングはURLエンコードした状態でリクエストしてください。
+
+[REST APIリファレンス](http://mb.cloud.nifty.com/doc/rest/common/format.html)
+
+対応している機能は以下の通りです。
+
+- データストア
 
 [ニフティクラウド mobile backend](http://mb.cloud.nifty.com/)
