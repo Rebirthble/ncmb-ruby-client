@@ -119,10 +119,10 @@ module NCMB
         return JSON.parse(http.put(path, queries.to_json, headers).body, symbolize_names: true)
       elsif method == :delete
         response = http.delete(path, headers).body
-        if response.nil?
-            return response
-        else
+        if response && response.length >= 2
             return JSON.parse(response, symbolize_names: true)
+        else
+            return response
         end
       end
     end
