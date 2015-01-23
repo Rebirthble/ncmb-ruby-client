@@ -100,5 +100,6 @@ REST APIのリクエスト方法は、ほぼ以下のREST APIリファレンス�
 対応している機能は以下の通りです。
 
 - データストア
+- プッシュ通知
 
 [ニフティクラウド mobile backend](http://mb.cloud.nifty.com/)
