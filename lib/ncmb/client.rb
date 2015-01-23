@@ -133,9 +133,9 @@ module NCMB
       application_key: ENV["NCMB_APPLICATION_KEY"],
       client_key:      ENV["NCMB_CLIENT_KEY"]
     }
-    unless params["application_key"] == ""
-        defaulted.merge!(params)
-    end
+    #unless params["application_key"] == ""
+    #    defaulted.merge!(params)
+    #end
 
     @@client = Client.new(defaulted)
   end
