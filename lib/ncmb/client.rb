@@ -28,6 +28,14 @@ module NCMB
     def post(path, params)
       request :post, path, params
     end
+
+    def put(path, params)
+      request :put, path, params
+    end
+
+    def delete(path, params)
+      request :delete, path, params
+    end
     
     def array2hash(ary)
       new_v = {}
@@ -61,8 +69,10 @@ module NCMB
         v = array2hash(v) if v.is_a? Array
         if v.is_a? Hash
           results[k.to_s] = v.to_json.to_s
-        else
+        elsif v.is_a? String
           results[k.to_s] = v.to_s
+        else 
+          results[k.to_s] = v
         end
       end
       results.collect do |key, value|
@@ -103,8 +113,17 @@ module NCMB
       if method == :get
         path = path + URI.escape((query == '' ? "" : "?"+query), /[^-_.!~*'()a-zA-Z\d;\/?@&=+$,#]/)
         return JSON.parse(http.get(path, headers).body, symbolize_names: true)
-      else
+      elsif method == :post
         return JSON.parse(http.post(path, queries.to_json, headers).body, symbolize_names: true)
+      elsif method == :put
+        return JSON.parse(http.put(path, queries.to_json, headers).body, symbolize_names: true)
+      elsif method == :delete
+        response = http.delete(path, headers).body
+        if response.nil?
+            return response
+        else
+            return JSON.parse(response, symbolize_names: true)
+        end
       end
     end
   end
