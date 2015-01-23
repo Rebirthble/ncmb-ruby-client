@@ -31,7 +31,7 @@ client_key: YOUR_CLI_KEY
 $bundle exec rackup config.ru -p 31614
 ```
 
-ブラウザでhttp:localhost:31614にアクセスしてみてください
+ブラウザで http://localhost:31614 にアクセスしてみてください
 
 Not Foundが出て来ます(APIのパスを指定していないため)
 
