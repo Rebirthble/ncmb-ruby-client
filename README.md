@@ -32,9 +32,11 @@ $bundle exec rackup config.ru -p 31614
 ```
 
 ブラウザでhttp:localhost:31614にアクセスしてみてください
+
 Not Foundが出て来ます(APIのパスを指定していないため)
 
 この状態で、サーバーに対してAPIリクエストを実行してみてください
+
 JSONデータが返ってくるとmobile backendへの通信が行われていることになります
 
 ```
@@ -47,6 +49,7 @@ Herokuへのデプロイ
 -----------------
 
 (Herokuのアカウント登録、CLIツールの用意が終わった状態から始まります)
+
 リポジトリ直下でheroku createを実行します
 
 ```
@@ -60,6 +63,7 @@ $git push heroku master
 ```
 
 ローカルではsetting.ymlを用意してAPIキーを設定しましたが、
+
 pushしてはいけないものなので、Config Variablesを利用してAPIキーを設定してください
 
 環境変数名は以下の二つを利用してください。
@@ -86,7 +90,9 @@ $ curl -X POST -d '{"title":"fugafuga"}' 'https://your-heroku-app.herokuapp.com/
 ------
 
 REST APIのリクエスト方法は、ほぼ以下のREST APIリファレンスに準拠しています
+
 このgatewayに対して、JSONデータを送信してJSONデータを受け取ってください
+
 ただし、データ検索を行う場合のみ、上記のサンプルを参考にクエリストリングはURLエンコードした状態でリクエストしてください
 
 [REST APIリファレンス](http://mb.cloud.nifty.com/doc/rest/common/format.html)
