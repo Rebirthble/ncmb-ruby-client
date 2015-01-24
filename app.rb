@@ -13,6 +13,10 @@ else
     NCMB.initialize application_key: "",  client_key: ""
 end
 
+get '/' do
+  erb :index
+end
+
 ##### Routing
 
 # object get
