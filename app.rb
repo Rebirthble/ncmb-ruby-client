@@ -13,8 +13,16 @@ else
     NCMB.initialize application_key: "",  client_key: ""
 end
 
+##### for mesh_hack
+
 get '/' do
   erb :index
+end
+
+get '/classes/start_action' do
+    hash = {:flag => 1}
+    path = "/2013-09-01/classes/slot_start_flag/Gg8weX5ZoD7X8WVn"
+    put_request(path, hash)
 end
 
 ##### Routing
@@ -27,6 +35,7 @@ end
 
 # object post
 post '/classes/:class_name' do
+    
     object = JSON.parse request.body.read
     path = "/2013-09-01/classes/#{params[:class_name]}"
     post_request(path, object)
