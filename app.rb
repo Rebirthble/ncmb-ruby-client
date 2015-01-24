@@ -22,7 +22,7 @@ get '/' do
       @client_key = yaml['client_key']
       @which_val = 'file'
     else
-      @app_key = ENV["NCMB_APPLICATION_KEY"],
+      @app_key = ENV["NCMB_APPLICATION_KEY"]
       @client_key = ENV["NCMB_CLIENT_KEY"]
       @which_val = 'env'
     end
