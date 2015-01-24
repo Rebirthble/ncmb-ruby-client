@@ -20,9 +20,11 @@ get '/' do
       yaml = YAML.load_file(File.join(File.dirname(__FILE__), '.', 'setting.yml'))
       @app_key = yaml['application_key']
       @client_key = yaml['client_key']
+      @satus = 'file'
     else
       @app_key = ENV["NCMB_APPLICATION_KEY"],
       @client_key = ENV["NCMB_CLIENT_KEY"]
+      @satus = 'env'
     end
   erb :index
 end
