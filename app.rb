@@ -39,6 +39,7 @@ get '/classes/start_action' do
     hash = {:flag_value => 1}
     path = "/2013-09-01/classes/slot_start_flag/Gg8weX5ZoD7X8WVn"
     put_request(path, hash)
+    get_request(path, {})
 end
 
 ##### Routing
