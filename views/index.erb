@@ -25,20 +25,23 @@
 <script src="/js/ncmb-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 <script>
-  var el = document.querySelector('.odometer');
-  od = new Odometer({
-    el: el,
+  "use strict";
+
+  var od = new Odometer({
+    el: document.querySelector('.odometer'),
     value: "333",
     duration: 10000,
     theme: 'default'
   });
+
   NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
   var slot_start_flag = NCMB.Object.extend("slot_start_flag");
   var query = new NCMB.Query(slot_start_flag);
+
   var flag_loop_func = function(){
     query.get("Gg8weX5ZoD7X8WVn", {
-    success: function(data) {
-        od.update(Math.floor((Math.random() * 900)) + Math.floor((Math.random() * 90)) + Math.floor((Math.random() * 9)) );
+      success: function(data) {
+        od.update(int_random());
         if(data.attributes.flag_value){
           od.update("888");
           sample_slot();
@@ -51,19 +54,27 @@
       }
     });
   }
-  flag_loop_func();
-  od.update("888");
-
+  
   var sample_slot = function(){
     _.delay(function(){
       od.update("888");
       _.delay(function(){
-        od.update("2020");
+        od.update("222");
       },3000);
     }, 3000);
   }
+
+  var int_random = function(){
+      return Math.floor((Math.random() * 900)) + Math.floor((Math.random() * 90)) + Math.floor((Math.random() * 9));
+  }
+
   var srot_start = function(){
   }
+
+  $(function(){
+    flag_loop_func();
+    od.update("888");
+  });
 </script>
 </body>
 </html>
