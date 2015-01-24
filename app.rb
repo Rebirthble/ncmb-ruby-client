@@ -21,8 +21,6 @@ get '/' do
   else 
     NCMB.initialize application_key: "",  client_key: ""
   end
-  @app_key = yaml['application_key']
-  @client_key = yaml['client_key']
   erb :index
 end
 
