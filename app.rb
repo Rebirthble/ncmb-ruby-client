@@ -16,8 +16,14 @@ end
 ##### for mesh_hack
 
 get '/' do
-  @app_key = NCMB.application_key
-  @client_key = NCMB.client_key
+    if File.exist?('./setting.yml')
+      yaml = YAML.load_file(File.join(File.dirname(__FILE__), '.', 'setting.yml'))
+      @app_key = yaml['application_key']
+      @client_key = yaml['client_key']
+    else
+      @app_key = ENV["NCMB_APPLICATION_KEY"],
+      @client_key = ENV["NCMB_CLIENT_KEY"]
+    end
   erb :index
 end
 
