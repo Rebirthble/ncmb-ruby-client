@@ -14,6 +14,11 @@ else
 end
 
 get '/' do
+  if File.exist?('./setting.yml')
+    yaml = YAML.load_file(File.join(File.dirname(__FILE__), '.', 'setting.yml'))
+  end
+  @app_key = yaml['application_key']
+  @client_key = yaml['client_key']
   erb :index
 end
 
