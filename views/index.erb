@@ -20,7 +20,7 @@
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 <script src="/js/ncmb-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-<p><%= status %></p>
+<p><%= @which_val %></p>
 <script>
   NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
   var slot_start_flag = NCMB.Object.extend("slot_start_flag");
