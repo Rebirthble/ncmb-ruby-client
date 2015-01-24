@@ -18,6 +18,30 @@
 <!-- Place your content here -->
 <!-- SCRIPTS -->
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-<p>hello wold</p>
+<script src="/js/ncmb-latest.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+<script>
+  NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
+  var slot_start_flag = NCMB.Object.extend("slot_start_flag");
+  var query = new NCMB.Query(slot_start_flag);
+  var flag_loop_func = function(){
+    console.log("request!");
+    query.get("Gg8weX5ZoD7X8WVn", {
+      success: function(data) {
+        console.log(data.attributes);
+        console.log("here");
+        if(data.attributes.flag_value){
+          alert("スロットスタート");
+        }else{
+          _.delay(flag_loop_func(), 5000);
+        }
+      },
+      error: function(object, error) {
+        console.log(object, error);
+      }
+    });
+  }
+  flag_loop_func();
+</script>
 </body>
 </html>
