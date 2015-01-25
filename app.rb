@@ -33,7 +33,7 @@ get '/classes/count_action' do
     hash = {:count_value => {"__op" => "Increment","amount" => 1}}
     path = "/2013-09-01/classes/shake_count/kBJKPWZhrXZ4mJF7"
     put_request(path, hash)
-    response = JSON.parse(get_request(path, {}))
+    response = @@client.get path, {}
     if response[:max_value] == response[:count_value]
         #max_valueとcount_valueのリセット
         hash = {:count_value => 0, :max_value => 0}
