@@ -13,26 +13,38 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <link rel="shortcut icon" href="">
+<link rel="stylesheet" href="/css/odometer-theme-default.css" />
 </head>
 <body>
 <!-- Place your content here -->
 <!-- SCRIPTS -->
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+<div id="odometer" class="odometer">123</div>
+<script src="/js/jquery-1.11.2.min.js"></script>
+<script src="/js/odometer.js"></script>
 <script src="/js/ncmb-latest.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-<p><%= @which_val %></p>
 <script>
+  "use strict";
+
+  var od = new Odometer({
+    el: document.querySelector('.odometer'),
+    value: "333",
+    duration: 10000,
+    theme: 'default'
+  });
+
   NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
   var slot_start_flag = NCMB.Object.extend("slot_start_flag");
   var query = new NCMB.Query(slot_start_flag);
+
   var flag_loop_func = function(){
-    console.log("request!");
     query.get("Gg8weX5ZoD7X8WVn", {
       success: function(data) {
-        console.log(data.attributes);
-        console.log("here");
+        od.update(int_random());
         if(data.attributes.flag_value){
-          alert("スロットスタート");
+          od.update("888");
+          sample_slot();
         }else{
           _.delay(flag_loop_func(), 5000);
         }
@@ -42,7 +54,27 @@
       }
     });
   }
-  flag_loop_func();
+  
+  var sample_slot = function(){
+    _.delay(function(){
+      od.update("888");
+      _.delay(function(){
+        od.update("222");
+      },3000);
+    }, 3000);
+  }
+
+  var int_random = function(){
+      return Math.floor((Math.random() * 900)) + Math.floor((Math.random() * 90)) + Math.floor((Math.random() * 9));
+  }
+
+  var srot_start = function(){
+  }
+
+  $(function(){
+    flag_loop_func();
+    od.update("888");
+  });
 </script>
 </body>
 </html>
