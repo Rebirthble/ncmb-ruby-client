@@ -21,9 +21,10 @@
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
 <div class="line" style="padding-top:50px;">
   <div class="content" style="text-align: center; background: url('/images/machine.png') no-repeat 50% 120px; height: 500px;">
-    <h1>.</h1>
+    <h1 class="shake">あと<span id="shake-num"></span>回振れ！</h1>
     <div class="slot-containnter" style="clear:both; padding-top: 215px;width: 335px;margin: 0 auto;">
       <div id="machine1" class="slotMachine" style="margin-left: -65px;">
+        <div class="slot human0"></div>
         <div class="slot human1"></div>
         <div class="slot human2"></div>
         <div class="slot human3"></div>
@@ -35,6 +36,7 @@
         <div class="slot human9"></div>
       </div>
       <div id="machine2" class="slotMachine">
+        <div class="slot human0"></div>
         <div class="slot human1"></div>
         <div class="slot human2"></div>
         <div class="slot human3"></div>
@@ -46,6 +48,7 @@
         <div class="slot human9"></div>
       </div>
       <div id="machine3" class="slotMachine">
+        <div class="slot human0"></div>
         <div class="slot human1"></div>
         <div class="slot human2"></div>
         <div class="slot human3"></div>
@@ -59,12 +62,12 @@
     </div>
   </div>
 
-  <div class="content text-center">
+<!--  <div class="content text-center">
     <div id="slotMachineButtonShuffle" class="slotMachineButton" style="font-size: 25px">Shuffle!</div>
     <div id="slotMachineButtonStop" class="slotMachineButton" style="font-size: 25px">Stop!</div>
   </div>
   <div class="clearfix"></div>
-</div>
+</div>-->
 
 <script type="text/template" id="items_template">
   <div id="machine1" class="slotMachine" style="margin-left: -65px;">
@@ -94,7 +97,7 @@
 </script>
 <script type="text/template" id="humans_template">
   <div id="machine1" class="slotMachine" style="margin-left: -65px;">
-    <div class="slot human1"></div>
+    <div class="slot human0"></div>
     <div class="slot human2"></div>
     <div class="slot human3"></div>
     <div class="slot human4"></div>
@@ -105,6 +108,7 @@
     <div class="slot human9"></div>
   </div>
   <div id="machine2" class="slotMachine">
+    <div class="slot human0"></div>
     <div class="slot human1"></div>
     <div class="slot human2"></div>
     <div class="slot human3"></div>
@@ -116,6 +120,7 @@
     <div class="slot human9"></div>
   </div>
   <div id="machine3" class="slotMachine">
+    <div class="slot human0"></div>
     <div class="slot human1"></div>
     <div class="slot human2"></div>
     <div class="slot human3"></div>
@@ -168,6 +173,7 @@
 </script>
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script src="/js/ncmb-latest.min.js"></script>
+<script src="/js/ncmb_setter.js"></script>
 <script type="text/javascript" src="/js/jquery.slotmachine.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 <script>
@@ -177,10 +183,9 @@
     $(".slot-containnter").html('');
   }
 
-  var DramInit = function(str,num){
+  var DramInit = function(str, num){
     return $(str).slotMachine({
       active: 0,
-      delay: 500,
       randomize : function(activeElementIndex){
         return num
       }
@@ -188,7 +193,7 @@
   }
 
   var slotHuman = function(){
-    HumanRamdom = Math.random() * 10;
+    HumanRamdom = Math.random() * 3 + 1;
     $(".slot-containnter").append(_.template($('#humans_template').text()));
     machine1 = DramInit("#machine1", HumanRamdom);
     machine2 = DramInit("#machine2", HumanRamdom);
@@ -206,13 +211,13 @@
   var slotNumber = function(){
     ItemRamdom = Math.random() * 7;
     $(".slot-containnter").append(_.template($('#numbers_template').text()));
-    var num_100 = Math.floor(Math.random() * 2);
-    var num_10 = Math.random() * 9;
-    var num_1 = Math.random() * 9;
+    var num_100 = Math.floor(Math.random() * 1);
+  var num_10 = Math.floor(Math.random() * 1);
+    var num_1 = Math.floor(Math.random() * 9);
     machine1 = DramInit("#machine1", num_100);
     machine2 = DramInit("#machine2", num_10);
     machine3 = DramInit("#machine3", num_1);
-    SendMaxVal = 100 * num_100 + 10 * num_10 + num_1
+    SendMaxVal = ((100 * num_100) + (10 * num_10) + (num_1));
   }
 
   var machineStop = function(){
@@ -230,6 +235,10 @@
     started--;
   };
 
+  var HumanRamdom = Math.floor(Math.random() * 4);
+
+  var ItemRamdom = Math.floor(Math.random() * 7);
+
   var machine1 = DramInit("#machine1", HumanRamdom);
 
   var machine2 = DramInit("#machine2", HumanRamdom);
@@ -238,11 +247,9 @@
 
   var started = 0;
 
-  var sendMaxVal = 0;
+  var ShakeNum = 0;
 
-  var HumanRamdom = Math.random() * 10;
-
-  var ItemRamdom = Math.random() * 7;
+  var SendMaxVal = 0;
 
   var slotStart = function(){
     started = 3;
@@ -284,38 +291,64 @@
       _.delay(function(){
         slotInitialize();
         slotHuman();
-        _.delay(function(){
-          console.log(sendMaxVal);
-        },1000);
+        set_max_value(SendMaxVal);
+        $(".shake").html('あと<span id="shake-num"></span>回振れ！');
+        $("#shake-num").text(SendMaxVal);
+        $(".shake").css("color","#FFFFFF");
+        checkShakeCount();
       },5000);
     },1500);
   }
 
-  $("#slotMachineButtonShuffle").click(function(){
-  });
+  var checkShakeCount = function(){
+    _.delay(function(){
+      console.log("here");
+      console.log(ShakeNum);
+      if(ShakeNum >= SendMaxVal){
+        $(".shake").text("ゲームリセット！");
+        SendMaxVal = 0;
+        reset_values();
+        _.delay(function(){
+           $(".shake").css("color","#000000");
+           $(".shake").html('あと<span id="shake-num"></span>回振れ！');
+        }, 2000);
+        return ;
+      }
+      ShakeNum = get_shake_num();
+      $("#shake-num").text(SendMaxVal - ShakeNum);
+      checkShakeCount();
+    },500);
+  }
 
   NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
   var slot_start_flag = NCMB.Object.extend("slot_start_flag");
   var query = new NCMB.Query(slot_start_flag);
 
-  var flag_loop_func = function(){
+var flag_loop_func = {};
+flag_loop_func.is_start = 0;
+flag_loop_func.loop = function(){
+    that = this;
     query.get("Gg8weX5ZoD7X8WVn", {
-      success: function(data) {
-        if(data.attributes.flag_value){
-         slotStart();
+    success: function(data) {
+        if(data.attributes.flag_value === 1 && that.is_start == 0){
+          $(".shake").text("カクテルガチャ！");
+          $(".shake").css("color","#FFFFFF");
+          slotStart();
+          that.is_start = 1;
+        } else if(data.attributes.flag_value === 0 && that.is_start == 1){
           FirstSlotStop();
-        }else{
-          _.delay(flag_loop_func(), 5000);
+          that.is_start = 0;
         }
+         _.delay(that.loop(), 5000);
       },
       error: function(object, error) {
         console.log(object, error);
       }
     });
   }
-  
-  flag_loop_func();
-  });
+
+  flag_loop_func.loop();
+});
 </script>
 </body>
 </html>
