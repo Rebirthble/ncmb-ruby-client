@@ -24,3 +24,26 @@ var reset_values = function(){
     flag_data.set("flag_value", 0);
     flag_data.save();
 };
+
+var shake_num = 0;
+
+var num_set = function(num){
+    shake_num = num;
+}
+
+var get_shake_num = function(){
+    var ShakeCount = NCMB.Object.extend("shake_count");
+    var query = new NCMB.Query(ShakeCount);
+    var num = 0;
+    var ret_data = query.get("kBJKPWZhrXZ4mJF7", {
+      success: function(data) {
+            console.log(data);
+            num_set(data.attributes.count_value);
+            console.log(shake_num);
+      },
+      error: function(object, error) {
+        console.log(object, error);
+      }
+    });
+    return shake_num;
+}
