@@ -33,7 +33,19 @@ get '/classes/count_action' do
     hash = {:count_value => {"__op" => "Increment","amount" => 1}}
     path = "/2013-09-01/classes/shake_count/kBJKPWZhrXZ4mJF7"
     put_request(path, hash)
-    get_request(path, {})
+    response = JSON.parse(get_request(path, {}))
+    if response[:max_value] == response[:count_value]
+        #max_valueとcount_valueのリセット
+        hash = {:count_value => 0, :max_value => 0}
+        path = "/2013-09-01/classes/shake_count/kBJKPWZhrXZ4mJF7"
+        put_request(path, hash)
+
+        #flag_valueのリセット
+        hash = {:flag_value => 0}
+        path = "/2013-09-01/classes/slot_start_flag/Gg8weX5ZoD7X8WVn"
+        put_request(path, hash)
+    end
+    response.to_json
 end
 
 get '/classes/start_action' do
