@@ -13,25 +13,285 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <link rel="shortcut icon" href="">
-<link rel="stylesheet" href="/css/odometer-theme-default.css" />
-</head>
+<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen" />
+
 <body>
 <!-- Place your content here -->
 <!-- SCRIPTS -->
 <!-- Example: <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
-<div id="odometer" class="odometer">123</div>
+<div class="line" style="padding-top:50px;">
+  <div class="content" style="text-align: center; background: url('/images/machine.png') no-repeat 50% 120px; height: 500px;">
+    <h1>.</h1>
+    <div class="slot-containnter" style="clear:both; padding-top: 215px;width: 335px;margin: 0 auto;">
+      <div id="machine1" class="slotMachine" style="margin-left: -65px;">
+        <div class="slot human1"></div>
+        <div class="slot human2"></div>
+        <div class="slot human3"></div>
+        <div class="slot human4"></div>
+        <div class="slot human5"></div>
+        <div class="slot human6"></div>
+        <div class="slot human7"></div>
+        <div class="slot human8"></div>
+        <div class="slot human9"></div>
+      </div>
+      <div id="machine2" class="slotMachine">
+        <div class="slot human1"></div>
+        <div class="slot human2"></div>
+        <div class="slot human3"></div>
+        <div class="slot human4"></div>
+        <div class="slot human5"></div>
+        <div class="slot human6"></div>
+        <div class="slot human7"></div>
+        <div class="slot human8"></div>
+        <div class="slot human9"></div>
+      </div>
+      <div id="machine3" class="slotMachine">
+        <div class="slot human1"></div>
+        <div class="slot human2"></div>
+        <div class="slot human3"></div>
+        <div class="slot human4"></div>
+        <div class="slot human5"></div>
+        <div class="slot human6"></div>
+        <div class="slot human7"></div>
+        <div class="slot human8"></div>
+        <div class="slot human9"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content text-center">
+    <div id="slotMachineButtonShuffle" class="slotMachineButton" style="font-size: 25px">Shuffle!</div>
+    <div id="slotMachineButtonStop" class="slotMachineButton" style="font-size: 25px">Stop!</div>
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<script type="text/template" id="items_template">
+  <div id="machine1" class="slotMachine" style="margin-left: -65px;">
+    <div class="slot item1"></div>
+    <div class="slot item2"></div>
+    <div class="slot item3"></div>
+    <div class="slot item4"></div>
+    <div class="slot item5"></div><div class="slot item6">
+    </div>
+  </div>
+  <div id="machine2" class="slotMachine">
+    <div class="slot item1"></div>
+    <div class="slot item2"></div>
+    <div class="slot item3"></div>
+    <div class="slot item4"></div>
+    <div class="slot item5"></div>
+    <div class="slot item6"></div>
+  </div>
+  <div id="machine3" class="slotMachine">
+    <div class="slot item1"></div>
+    <div class="slot item2"></div>
+    <div class="slot item3"></div>
+    <div class="slot item4"></div>
+    <div class="slot item5"></div>
+    <div class="slot item6"></div>
+  </div>
+</script>
+<script type="text/template" id="humans_template">
+  <div id="machine1" class="slotMachine" style="margin-left: -65px;">
+    <div class="slot human1"></div>
+    <div class="slot human2"></div>
+    <div class="slot human3"></div>
+    <div class="slot human4"></div>
+    <div class="slot human5"></div>
+    <div class="slot human6"></div>
+    <div class="slot human7"></div>
+    <div class="slot human8"></div>
+    <div class="slot human9"></div>
+  </div>
+  <div id="machine2" class="slotMachine">
+    <div class="slot human1"></div>
+    <div class="slot human2"></div>
+    <div class="slot human3"></div>
+    <div class="slot human4"></div>
+    <div class="slot human5"></div>
+    <div class="slot human6"></div>
+    <div class="slot human7"></div>
+    <div class="slot human8"></div>
+    <div class="slot human9"></div>
+  </div>
+  <div id="machine3" class="slotMachine">
+    <div class="slot human1"></div>
+    <div class="slot human2"></div>
+    <div class="slot human3"></div>
+    <div class="slot human4"></div>
+    <div class="slot human5"></div>
+    <div class="slot human6"></div>
+    <div class="slot human7"></div>
+    <div class="slot human8"></div>
+    <div class="slot human9"></div>
+  </div>
+</script>
+
+<script type="text/template" id="numbers_template">
+  <div id="machine1" class="slotMachine" style="margin-left: -65px;">
+    <div class="slot number0"></div>
+    <div class="slot number1"></div>
+    <div class="slot number2"></div>
+    <div class="slot number3"></div>
+    <div class="slot number4"></div>
+    <div class="slot number5"></div>
+    <div class="slot number6"></div>
+    <div class="slot number7"></div>
+    <div class="slot number8"></div>
+    <div class="slot number9"></div>
+  </div>
+  <div id="machine2" class="slotMachine">
+    <div class="slot number0"></div>
+    <div class="slot number1"></div>
+    <div class="slot number2"></div>
+    <div class="slot number3"></div>
+    <div class="slot number4"></div>
+    <div class="slot number5"></div>
+    <div class="slot number6"></div>
+    <div class="slot number7"></div>
+    <div class="slot number8"></div>
+    <div class="slot number9"></div>
+  </div>
+  <div id="machine3" class="slotMachine">
+    <div class="slot number0"></div>
+    <div class="slot number1"></div>
+    <div class="slot number2"></div>
+    <div class="slot number3"></div>
+    <div class="slot number4"></div>
+    <div class="slot number5"></div>
+    <div class="slot number6"></div>
+    <div class="slot number7"></div>
+    <div class="slot number8"></div>
+    <div class="slot number9"></div>
+  </div>
+</script>
 <script src="/js/jquery-1.11.2.min.js"></script>
-<script src="/js/odometer.js"></script>
 <script src="/js/ncmb-latest.min.js"></script>
+<script type="text/javascript" src="/js/jquery.slotmachine.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 <script>
-  "use strict";
+  $(function(){
 
-  var od = new Odometer({
-    el: document.querySelector('.odometer'),
-    value: "333",
-    duration: 10000,
-    theme: 'default'
+  var slotInitialize = function(){
+    $(".slot-containnter").html('');
+  }
+
+  var DramInit = function(str,num){
+    return $(str).slotMachine({
+      active: 0,
+      delay: 500,
+      randomize : function(activeElementIndex){
+        return num
+      }
+    });
+  }
+
+  var slotHuman = function(){
+    HumanRamdom = Math.random() * 10;
+    $(".slot-containnter").append(_.template($('#humans_template').text()));
+    machine1 = DramInit("#machine1", HumanRamdom);
+    machine2 = DramInit("#machine2", HumanRamdom);
+    machine3 = DramInit("#machine3", HumanRamdom);
+  }
+
+  var slotItem = function(){
+    ItemRamdom = Math.random() * 7;
+    $(".slot-containnter").append(_.template($('#items_template').text()));
+    machine1 = DramInit("#machine1", ItemRamdom);
+    machine2 = DramInit("#machine2", ItemRamdom);
+    machine3 = DramInit("#machine3", ItemRamdom);
+  }
+
+  var slotNumber = function(){
+    ItemRamdom = Math.random() * 7;
+    $(".slot-containnter").append(_.template($('#numbers_template').text()));
+    var num_100 = Math.floor(Math.random() * 2);
+    var num_10 = Math.random() * 9;
+    var num_1 = Math.random() * 9;
+    machine1 = DramInit("#machine1", num_100);
+    machine2 = DramInit("#machine2", num_10);
+    machine3 = DramInit("#machine3", num_1);
+    SendMaxVal = 100 * num_100 + 10 * num_10 + num_1
+  }
+
+  var machineStop = function(){
+    switch(started){
+      case 3:
+        machine1.stop();
+        break;
+    case 2:
+      machine2.stop();
+      break;
+    case 1:
+      machine3.stop();
+      break;
+    }
+    started--;
+  };
+
+  var machine1 = DramInit("#machine1", HumanRamdom);
+
+  var machine2 = DramInit("#machine2", HumanRamdom);
+
+  var machine3 = DramInit("#machine3", HumanRamdom);
+
+  var started = 0;
+
+  var sendMaxVal = 0;
+
+  var HumanRamdom = Math.random() * 10;
+
+  var ItemRamdom = Math.random() * 7;
+
+  var slotStart = function(){
+    started = 3;
+    machine1.shuffle();
+    machine2.shuffle();
+    machine3.shuffle();
+  }
+
+  var FirstSlotStop = function(){
+    _.delay(machineStop, 1000);
+    _.delay(machineStop, 1300);
+      _.delay(function(){
+        machine3.stop();
+        _.delay(function(){
+          _.delay(function(){
+            slotInitialize();
+            if(false){
+              slotItem();
+            }else{
+              slotNumber();
+            }
+            _.delay(function(){
+              machine1.shuffle();
+              machine2.shuffle();
+              machine3.shuffle();
+              SecondSlotStop();
+            },1500);
+         },2000);
+      },2000)
+    },1500);
+  }
+
+  var SecondSlotStop = function(){
+    started = 3;
+    _.delay(machineStop,1000);
+    _.delay(machineStop,1300);
+    _.delay(function(){
+      machine3.stop();
+      _.delay(function(){
+        slotInitialize();
+        slotHuman();
+        _.delay(function(){
+          console.log(sendMaxVal);
+        },1000);
+      },5000);
+    },1500);
+  }
+
+  $("#slotMachineButtonShuffle").click(function(){
   });
 
   NCMB.initialize("<%= @app_key %>", "<%= @client_key %>");
@@ -41,10 +301,9 @@
   var flag_loop_func = function(){
     query.get("Gg8weX5ZoD7X8WVn", {
       success: function(data) {
-        od.update(int_random());
         if(data.attributes.flag_value){
-          od.update("888");
-          sample_slot();
+         slotStart();
+          FirstSlotStop();
         }else{
           _.delay(flag_loop_func(), 5000);
         }
@@ -55,25 +314,7 @@
     });
   }
   
-  var sample_slot = function(){
-    _.delay(function(){
-      od.update("888");
-      _.delay(function(){
-        od.update("222");
-      },3000);
-    }, 3000);
-  }
-
-  var int_random = function(){
-      return Math.floor((Math.random() * 900)) + Math.floor((Math.random() * 90)) + Math.floor((Math.random() * 9));
-  }
-
-  var srot_start = function(){
-  }
-
-  $(function(){
-    flag_loop_func();
-    od.update("888");
+  flag_loop_func();
   });
 </script>
 </body>
